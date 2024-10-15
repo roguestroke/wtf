@@ -6,6 +6,7 @@ import com.example.teamcity.api.requests.CheckedRequests;
 import com.example.teamcity.api.requests.unchecked.UncheckedBase;
 import com.example.teamcity.api.spec.Specifications;
 import org.apache.http.HttpStatus;
+import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
 
 import static com.example.teamcity.api.enums.Endpoint.PROJECTS;
@@ -60,6 +61,11 @@ public class ProjectTest extends BaseApiTest {
 
         new UncheckedBase(Specifications.authSpec(testData.getUser()), PROJECTS)
                 .read(createdProject.getId())
-                .then().assertThat().statusCode(HttpStatus.SC_NOT_FOUND);
+                .then().assertThat().statusCode(HttpStatus.SC_NOT_FOUND)
+                .body(Matchers.allOf(
+                        Matchers.containsString("Project cannot be found by external id"),
+                        Matchers.containsString(testData.getProject().getId()),
+                        Matchers.containsString("Check the reference is correct and the user has permissions to access the entity.")
+                ));
     }
 }
