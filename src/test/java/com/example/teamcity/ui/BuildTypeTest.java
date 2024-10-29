@@ -1,4 +1,5 @@
 package com.example.teamcity.ui;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import com.codeborne.selenide.Condition;
@@ -12,28 +13,24 @@ import com.example.teamcity.ui.pages.admin.CreateProjectPage;
 @Test(groups = {"Regression"})
 public class BuildTypeTest extends BaseUiTest {
 
+
     private static final String REPO_URL = "https://github.com/roguestroke/wtf";
    
     @Test(description = "User should be able to create build type", groups = {"Positive"})
     public void userCreatesBuildType() {
-        // подготовка окружения
         loginAs(testData.getUser());
-        var newProject = supperUserCheckedRequests.<Project>getRequest(PROJECTS).create(testData.getProject());
         
-        // взаимодействие с UI
-        CreateProjectPage.open(newProject.getId())
+        CreateProjectPage.open("_Root")
                 .createForm(REPO_URL)
                 .setupProject(testData.getProject().getName(), testData.getBuildType().getName());
 
-        // проверка состояния API
-        // (корректность отправки данных с UI на API)
+
         var createdBuildType = supperUserCheckedRequests.<BuildType>getRequest(Endpoint.BUILD_TYPES).read("name:" + testData.getBuildType().getName());
         softy.assertNotNull(createdBuildType);
 
-        // проверка состояния UI
-        // (корректность считывания данных и отображение данных на UI)
-        ProjectPage.open(testData.getProject().getId())
-            .openProject()
+        var createdProject = supperUserCheckedRequests.<Project>getRequest(Endpoint.PROJECTS).read("name:" + testData.getProject().getName());
+     
+        ProjectPage.open(createdProject.getId())
             .buildTitle.shouldHave(Condition.text(testData.getBuildType().getName()));
     }
 
