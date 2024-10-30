@@ -3,6 +3,7 @@ import org.testng.annotations.Test;
 
 import com.codeborne.selenide.Condition;
 import com.example.teamcity.api.enums.Endpoint;
+import static com.example.teamcity.api.enums.Endpoint.PROJECTS;
 import com.example.teamcity.api.models.BuildType;
 import com.example.teamcity.api.models.Project;
 import com.example.teamcity.ui.pages.ProjectPage;
@@ -18,18 +19,17 @@ public class BuildTypeTest extends BaseUiTest {
     @Test(description = "User should be able to create build type", groups = {"Positive"})
     public void userCreatesBuildType() {
         loginAs(testData.getUser());
+        var createdProject = supperUserCheckedRequests.<Project>getRequest(PROJECTS).create(testData.getProject());
         
-        CreateProjectPage.open("_Root")
+        CreateProjectPage.open(createdProject.getId())
                 .createForm(REPO_URL)
                 .setupProject(testData.getProject().getName(), testData.getBuildType().getName());
 
-
         var createdBuildType = supperUserCheckedRequests.<BuildType>getRequest(Endpoint.BUILD_TYPES).read("name:" + testData.getBuildType().getName());
         softy.assertNotNull(createdBuildType);
-
-        var createdProject = supperUserCheckedRequests.<Project>getRequest(Endpoint.PROJECTS).read("name:" + testData.getProject().getName());
      
         ProjectPage.open(createdProject.getId())
+            .openProject()
             .buildTitle.shouldHave(Condition.text(testData.getBuildType().getName()));
     }
 
