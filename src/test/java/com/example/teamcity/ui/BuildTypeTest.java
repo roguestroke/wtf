@@ -1,11 +1,15 @@
 package com.example.teamcity.ui;
+import org.apache.http.HttpStatus;
 import org.testng.annotations.Test;
 
 import com.codeborne.selenide.Condition;
 import com.example.teamcity.api.enums.Endpoint;
+import static com.example.teamcity.api.enums.Endpoint.BUILD_TYPES;
 import static com.example.teamcity.api.enums.Endpoint.PROJECTS;
 import com.example.teamcity.api.models.BuildType;
 import com.example.teamcity.api.models.Project;
+import com.example.teamcity.api.requests.unchecked.UncheckedBase;
+import com.example.teamcity.api.spec.Specifications;
 import com.example.teamcity.ui.pages.ProjectPage;
 import com.example.teamcity.ui.pages.admin.CreateProjectPage;
 
@@ -41,12 +45,14 @@ public class BuildTypeTest extends BaseUiTest {
         CreateProjectPage.open("_Root")
                 .createForm(WRONG_REPO_URL);
 
-        var createdBuildType = supperUserCheckedRequests.<BuildType>getRequest(Endpoint.BUILD_TYPES).read("name:" + testData.getBuildType().getName());
-        softy.assertNull(createdBuildType);
+        new UncheckedBase(Specifications.superUserSpec(), BUILD_TYPES)
+                .read("name:" + testData.getBuildType().getName())
+                .then().assertThat().statusCode(HttpStatus.SC_NOT_FOUND);
 
         CreateProjectPage.errorMessage.shouldHave(Condition.text("git -c credential.helper= ls-remote origin command failed.\n" + //
                         "exit code: 128\n" + //
                         "stderr: fatal: could not read Username for 'https://github.com': No such device or address"));
+                      
     }
 }
 
