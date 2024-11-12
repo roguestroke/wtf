@@ -41,10 +41,12 @@ public class BuildTypeTest extends BaseUiTest {
         CreateProjectPage.open("_Root")
                 .createForm(WRONG_REPO_URL);
 
+        var createdBuildType = supperUserCheckedRequests.<BuildType>getRequest(Endpoint.BUILD_TYPES).read("name:" + testData.getBuildType().getName());
+        softy.assertNull(createdBuildType);
 
         CreateProjectPage.errorMessage.shouldHave(Condition.text("git -c credential.helper= ls-remote origin command failed.\n" + //
                         "exit code: 128\n" + //
-                        "stderr: fatal: could not read Username for 'https://github.com': No such device or address"));   
+                        "stderr: fatal: could not read Username for 'https://github.com': No such device or address"));
     }
 }
 
