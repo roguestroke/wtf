@@ -20,7 +20,7 @@ private String url;
     @BeforeSuite(alwaysRun = true)
     public void setupUiTest() {
         Configuration.browser = Config.getProperty("browser");
-        url = Configuration.baseUrl = "http://" + Config.getProperty("host") + ":" + Config.getProperty("port") ;
+        url = Configuration.baseUrl = "http://" + Config.getProperty("host");
         Configuration.remote = Config.getProperty("remote");
         Configuration.browserSize = Config.getProperty("browserSize");
 
