@@ -5,11 +5,11 @@ on: push
 jobs: 
   #Собирается бэкенд и деплоится на стейдж/review app
   backend:
-    uses: ./.github/wotkflows/backend-stage.yml
+    uses: ./.github/workflows/backend-stage.yml
   
   #Собирается бэкенд и деплоится на стейдж/review app
   frontend:
-    uses: ./.github/wotkflows/frontend-stage.yml
+    uses: ./.github/workflows/frontend-stage.yml
 
   # Прогоняются API тесты
   automation-api:
