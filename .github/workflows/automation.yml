@@ -1,11 +1,12 @@
-name: Run api tests
+name: Run tests
 
-on: 
+on:
   workflow_call:
-    package:
-      description: api | ui
-      required: true
-      type: string
+    inputs:
+      package:
+        description: api | ui
+        required: true
+        type: string
 
 jobs:
   validate-checkstyle:
