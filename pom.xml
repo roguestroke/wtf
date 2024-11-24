@@ -16,6 +16,7 @@
         <allure.version>2.29.0</allure.version>
         <jackson.version>2.17.2</jackson.version>
         <selenide.version>7.4.3</selenide.version>
+        <swagger-coverage-rest-assured.version>1.5.0</swagger-coverage-rest-assured.version>
     </properties>
 
     <dependencies>
@@ -88,6 +89,12 @@
                     <groupId>com.codeborne</groupId>
                     <artifactId>selenide</artifactId>
                     <version>${selenide.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.github.viclovsky/swagger-coverage-rest-assured -->
+        <dependency>
+            <groupId>com.github.viclovsky</groupId>
+            <artifactId>swagger-coverage-rest-assured</artifactId>
+            <version>${swagger-coverage-rest-assured.version}</version>
         </dependency>
     </dependencies>
 
