@@ -10,6 +10,7 @@ import com.example.teamcity.ui.elements.BasePageElement;
 
 public abstract class BasePage {
     public static final Duration BASE_WAITING = Duration.ofSeconds(30);
+    public static final Duration LONG_WAITING = Duration.ofMinutes(5);
 
     protected <T extends BasePageElement> List<T> generatePageElements(
             ElementsCollection collection, Function<SelenideElement, T> creator)
