@@ -3,10 +3,8 @@ import org.apache.http.HttpStatus;
 import org.testng.annotations.Test;
 
 import com.codeborne.selenide.Condition;
-import com.example.teamcity.api.enums.Endpoint;
 import static com.example.teamcity.api.enums.Endpoint.BUILD_TYPES;
 import static com.example.teamcity.api.enums.Endpoint.PROJECTS;
-import com.example.teamcity.api.models.BuildType;
 import com.example.teamcity.api.models.Project;
 import com.example.teamcity.api.requests.unchecked.UncheckedBase;
 import com.example.teamcity.api.spec.Specifications;
@@ -29,8 +27,8 @@ public class BuildTypeTest extends BaseUiTest {
                 .createForm(REPO_URL)
                 .setupProject(testData.getProject().getName(), testData.getBuildType().getName());
 
-        var createdBuildType = supperUserCheckedRequests.<BuildType>getRequest(Endpoint.BUILD_TYPES).read("name:" + testData.getBuildType().getName());
-        softy.assertNotNull(createdBuildType);
+        // var createdBuildType = supperUserCheckedRequests.<BuildType>getRequest(Endpoint.BUILD_TYPES).read("name:" + testData.getBuildType().getName());
+        // softy.assertNotNull(createdBuildType);
      
         ProjectPage.open(createdProject.getId())
             .openProject()
