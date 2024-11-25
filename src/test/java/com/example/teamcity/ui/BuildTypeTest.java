@@ -14,6 +14,8 @@ import com.example.teamcity.api.spec.Specifications;
 import com.example.teamcity.ui.pages.ProjectPage;
 import com.example.teamcity.ui.pages.admin.CreateProjectPage;
 
+import static io.qameta.allure.Allure.step;
+
 @Test(groups = {"Regression"})
 public class BuildTypeTest extends BaseUiTest {
 
@@ -32,6 +34,7 @@ public class BuildTypeTest extends BaseUiTest {
 
         sleep(5000);
 
+        step("Check created Build Type by API");
         var createdBuildType = supperUserCheckedRequests.<BuildType>getRequest(Endpoint.BUILD_TYPES).read("name:" + testData.getBuildType().getName());
         softy.assertNotNull(createdBuildType);
      
