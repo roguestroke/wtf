@@ -34,7 +34,7 @@ jobs:
 
       - name: Run tests
         continue-on-error: true
-        # Указываем группу, чтобы не запустить тесты, связанные с сетапом TeamCity
+        # Указываем группу, чтобы не запустить тесты, связанные с сетапом Teamcity
         run: ./mvnw test -Dtest='com.example.teamcity.${{ inputs.package }}.**' -Dgroups=Regression
         
       # Создаем репорт с покрытием API тестов, основанном на Swagger.
